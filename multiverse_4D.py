@@ -290,7 +290,7 @@ def plot_multiverse_4d(res: dict, save_path: str | None = None) -> None:
         fontweight="bold",
         y=0.965,
     )
-    fig.subplots_adjust(top=0.89, bottom=0.08, left=0.06, right=0.98, hspace=0.36, wspace=0.27)
+    fig.subplots_adjust(top=0.89, bottom=0.08, left=0.06, right=0.95, hspace=0.36, wspace=0.27)
 
     colors = plt.cm.plasma(np.linspace(0.22, 0.88, B))
     linestyles = ["-", "--", ":", "-."]
