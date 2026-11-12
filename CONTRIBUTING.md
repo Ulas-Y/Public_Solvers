@@ -1,6 +1,6 @@
 # Contributing Guidelines
 
-Thank you for your interest in contributing to **[PROJECT NAME]**!
+Thank you for your interest in contributing to **Private Solvers**!
 
 This document describes the contribution process, development expectations, and intellectual property conditions applicable to contributions to this project.
 
@@ -112,5 +112,4 @@ The project maintainer reserves the right to update these guidelines. Continued 
 
 ---
 
-Maintainer / Copyright holder template: [AUTHOR / COPYRIGHT HOLDER]  
-(Replace with your name, handle, or entity before first use.)
+Maintainer / Copyright holder template: Ulas-Y  

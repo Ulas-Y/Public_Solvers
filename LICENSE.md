@@ -1,8 +1,9 @@
 # PROPRIETARY SOFTWARE LICENSE
+
 ## ALL RIGHTS RESERVED
 
-**Software:** [PROGRAM / SIMULATION NAME]  
-**Copyright (c) 2026 [AUTHOR / COPYRIGHT HOLDER]**
+**Software:** Private Solvers  
+**Copyright (c) 2026 Ulas-Y**
 
 All rights reserved.
 
@@ -55,5 +56,5 @@ This license shall be interpreted in accordance with the applicable laws governi
 
 **END OF LICENSE**
 
-Copyright (c) 2026 [AUTHOR / COPYRIGHT HOLDER].  
+Copyright (c) 2026 Ulas-Y.  
 ALL RIGHTS RESERVED.
