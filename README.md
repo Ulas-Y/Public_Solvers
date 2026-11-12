@@ -53,7 +53,7 @@ Each knowledge domain $g$ is parameterized by base volume $A_{0,g}$, structural 
 
 $$I_g(\phi) = A_{0,g} \, C_g \left[ 1 + \sum_{m=1}^{N} \left( a_m (1 - \cos m\phi) + b_m \sin m\phi \right) \right], \qquad a_m = \frac{0.40}{m^p},\; b_m = \frac{0.25}{m^p}$$
 
-*(Spectral decay $p > 0$ is enforced whenever $N > 3$ to prevent unbounded harmonic zip-bombs.)*
+Spectral decay ($p > 0$) is enforced whenever $N > 3$ to prevent unbounded harmonic zip-bombs.
 
 Scanning $\phi \in [0, \pi]$ yields the irreducible axiomatic core $M_g = \min_\phi I_g(\phi)$, total domain ceiling $D_g = \max_\phi I_g(\phi)$, and dimensionless **ignition barrier**:
 
@@ -63,7 +63,7 @@ $$\alpha_{0,g} = \frac{M_g}{D_g} \in (0, 1)$$
 
 ### 2. Cross-Domain Prerequisite Transfer ($W \in \mathbb{R}^{G \times G}$)
 
-Let $W_{g, g'} \ge 0$ ($W_{gg} = 0$) define how strongly mastering domain $g'$ unlocks domain $g$. Contracting current mastery $\mathbf{U}_s$ along Axis 3 ($\mathbf{S}_{\text{prereq}} = \mathbf{U}_s W^\top$) lowers the effective ignition barrier and boosts effective ingestion bandwidth in downstream subjects:
+Let $W_{g, g'} \ge 0$ ($W_{gg} = 0$) define how strongly mastering domain $g'$ unlocks domain $g$. Contracting current mastery $\mathbf{U}(s)$ along Axis 3 ($\mathbf{S}^{\mathrm{prereq}} = \mathbf{U}(s) W^\top$) lowers the effective ignition barrier and boosts effective ingestion bandwidth in downstream subjects:
 
 $$\boldsymbol{\alpha}_{\text{eff}} = \boldsymbol{\alpha}_0 \odot \exp\!\left(-\beta_\alpha \, \mathbf{U}_s W^\top\right), \qquad \mathbf{V}_{\text{eff}} = \min\!\left(1,\; \mathbf{V}_s + \beta_v \, \mathbf{U}_s W^\top\right)$$
 
@@ -71,9 +71,11 @@ $$\boldsymbol{\alpha}_{\text{eff}} = \boldsymbol{\alpha}_0 \odot \exp\!\left(-\b
 
 ### 3. Circadian Rhythm, Adrenaline Spikes & Post-Spite Burnout
 
-Cognitive output is gated by a 24-hour circadian awakeness wave ($\sin^2$ for night owls, $\cos^2$ for early birds—preserving $\text{awake}_{\text{owl}}(t) + \text{awake}_{\text{early}}(t) \equiv 1$ ):
+Cognitive output is gated by a 24-hour circadian awakeness wave ($\sin^2$ for night owls, $\cos^2$ for early birds—preserving $\mathrm{awake}^{\mathrm{owl}}(t) + \mathrm{awake}^{\mathrm{early}}(t) \equiv 1$):
 
-$$\text{awake}(t) = \begin{cases} \sin^2\!\left(\frac{\pi}{24}(t - t_{\text{shift}})\right), & \text{if } \texttt{is\_night\_owl} = \text{True} \\ \cos^2\!\left(\frac{\pi}{24}(t - t_{\text{shift}})\right), & \text{if } \texttt{is\_night\_owl} = \text{False} \end{cases}$$
+$$
+\mathrm{awake}(t) = \begin{cases} \sin^2\!\left(\frac{\pi}{24}(t - t_{\mathrm{shift}})\right), & \text{if } \mathrm{night\text{-}owl} = \mathrm{True} \\ \cos^2\!\left(\frac{\pi}{24}(t - t_{\mathrm{shift}})\right), & \text{if } \mathrm{night\text{-}owl} = \mathrm{False} \end{cases}
+$$
 
 When **Deadline Panic** or **Spite Taunt** triggers, energy $E(t)$ spikes to `1.0`, holds at peak for $t_{\text{peak}}$ hours, and decays exponentially at an impulse-damped rate $k_{\text{energy}} / i$. Meanwhile, high-alertness expenditure builds fatigue $F(t)$ ($\text{awake} > 0.5$) while circadian troughs recover it ($\text{awake} < 0.5$ ):
 
