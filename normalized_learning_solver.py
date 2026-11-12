@@ -1,3 +1,5 @@
+import numpy as np
+
 def simulate_normalized(
     steps: int,
     tau: float = 0.5,
