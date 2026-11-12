@@ -138,8 +138,7 @@ self_solvers/
 ├── run_sim.py           # Unified entry-point simulation & visualization script
 ├── CONTRIBUTING.md
 ├── Issues.md
-├── LICENSE.md
-└── To-Do.md
+└── LICENSE.md
 ```
 
 ---
