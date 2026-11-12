@@ -71,7 +71,7 @@ $$\boldsymbol{\alpha}_{\text{eff}} = \boldsymbol{\alpha}_0 \odot \exp\!\left(-\b
 
 ### 3. Circadian Rhythm, Adrenaline Spikes & Post-Spite Burnout
 
-Cognitive output is gated by a 24-hour circadian awakeness wave ($\sin^2$ for night owls, $\cos^2$ for early birds—preserving $\text{awake}_{\text{owl}}(t) + \text{awake}_{\text{early}}(t) \equiv 1$ ):
+Cognitive output is gated by a 24-hour circadian awakeness wave ($\sin^2$ for night owls, $\cos^2$ for early birds—preserving $\text{awake}_{\text{owl}}(t)$ + $\text{awake}_{\text{early}}(t) \equiv 1$ ):
 
 $$\text{awake}(t) = \begin{cases} \sin^2\!\left(\frac{\pi}{24}(t - t_{\text{shift}})\right), & \text{if } \texttt{is\_night\_owl} = \text{True} \\ \cos^2\!\left(\frac{\pi}{24}(t - t_{\text{shift}})\right), & \text{if } \texttt{is\_night\_owl} = \text{False} \end{cases}$$
 
