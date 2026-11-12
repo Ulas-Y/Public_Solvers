@@ -74,7 +74,7 @@ $$\boldsymbol{\alpha}_{\text{eff}} = \boldsymbol{\alpha}_0 \odot \exp\!\left(-\b
 Cognitive output is gated by a 24-hour circadian awakeness wave ($\sin^2$ for night owls, $\cos^2$ for early birds—preserving $\mathrm{awake}^{\mathrm{owl}}(t) + \mathrm{awake}^{\mathrm{early}}(t) \equiv 1$):
 
 $$
-\mathrm{awake}(t) = \begin{cases} \sin^2\!\left(\frac{\pi}{24}(t - t_{\mathrm{shift}})\right), & \text{if } \mathrm{night\text{-}owl} = \mathrm{True} \\ \cos^2\!\left(\frac{\pi}{24}(t - t_{\mathrm{shift}})\right), & \text{if } \mathrm{night\text{-}owl} = \mathrm{False} \end{cases}
+\mathrm{awake}(t) = \begin{cases} \sin^2\!\left(\frac{\pi}{24}(t - t_{\mathrm{shift}})\right), & \text{if } \mathrm{night\text{-}owl} = \mathrm{True}; \\ \cos^2\!\left(\frac{\pi}{24}(t - t_{\mathrm{shift}})\right), & \text{if } \mathrm{night\text{-}owl} = \mathrm{False} \end{cases}
 $$
 
 When **Deadline Panic** or **Spite Taunt** triggers, energy $E(t)$ spikes to `1.0`, holds at peak for $t_{\text{peak}}$ hours, and decays exponentially at an impulse-damped rate $k_{\text{energy}} / i$. Meanwhile, high-alertness expenditure builds fatigue $F(t)$ ($\text{awake} > 0.5$) while circadian troughs recover it ($\text{awake} < 0.5$ ):
