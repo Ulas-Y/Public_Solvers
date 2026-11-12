@@ -71,11 +71,11 @@ $$\boldsymbol{\alpha}_{\text{eff}} = \boldsymbol{\alpha}_0 \odot \exp\!\left(-\b
 
 ### 3. Circadian Rhythm, Adrenaline Spikes & Post-Spite Burnout
 
-Cognitive output is gated by a 24-hour circadian awakeness wave ($\sin^2$ for night owls, $\cos^2$ for early birds—preserving $\text{awake}_{\text{owl}}(t) + \text{awake}_{\text{early}}(t) \equiv 1$):
+Cognitive output is gated by a 24-hour circadian awakeness wave ($\sin^2$ for night owls, $\cos^2$ for early birds—preserving $\text{awake}_{\text{owl}}(t) + \text{awake}_{\text{early}}(t) \equiv 1$ ):
 
 $$\text{awake}(t) = \begin{cases} \sin^2\!\left(\frac{\pi}{24}(t - t_{\text{shift}})\right), & \text{if } \texttt{is\_night\_owl} = \text{True} \\ \cos^2\!\left(\frac{\pi}{24}(t - t_{\text{shift}})\right), & \text{if } \texttt{is\_night\_owl} = \text{False} \end{cases}$$
 
-When **Deadline Panic** or **Spite Taunt** triggers, energy $E(t)$ spikes to `1.0`, holds at peak for $t_{\text{peak}}$ hours, and decays exponentially at an impulse-damped rate $k_{\text{energy}} / i$. Meanwhile, high-alertness expenditure builds fatigue $F(t)$ ($\text{awake} > 0.5$) while circadian troughs recover it ($\text{awake} < 0.5$):
+When **Deadline Panic** or **Spite Taunt** triggers, energy $E(t)$ spikes to `1.0`, holds at peak for $t_{\text{peak}}$ hours, and decays exponentially at an impulse-damped rate $k_{\text{energy}} / i$. Meanwhile, high-alertness expenditure builds fatigue $F(t)$ ($\text{awake} > 0.5$) while circadian troughs recover it ($\text{awake} < 0.5$ ):
 
 $$F_{s+1} = \text{clip}\!\Big(F_s + \max(0, \text{awake} - 0.5)\, E_s \, k_{\text{fatigue}}\,\tau - \max(0, 0.5 - \text{awake})\, k_{\text{recovery}}\,\tau,\; 0,\; 1\Big)$$
 
