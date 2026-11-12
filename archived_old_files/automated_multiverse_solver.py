@@ -1,29 +1,24 @@
-from dataclasses import dataclass
 import numpy as np
-from information_volume_computing import compute_info_volume
-from information_volume_computing import estimate_domain_bounds
-from timeline_solver import TimelineSpec
+from archived_old_files.timeline_solver import TimelineSpec
+from archived_old_files.shock_event_handler import ShockEvent
+from archived_old_files.information_volume_computing import compute_info_volume
+from archived_old_files.information_volume_computing import estimate_domain_bounds
 
-@dataclass
-class ShockEvent:
-    step: int
-    branch: int                              # Timeline index to perturb
-    new_regime: TimelineSpec | None = None   # Optional parameter swap
-    dv: float = 0.0                          # Instantaneous bandwidth kick
-    dxi: float = 0.0                         # Instantaneous scope shift (<0 = axiom clamp)
-    dn: float = 0.0                          # Instantaneous efficiency boost
-    label: str = "Shock"
-
-
-def simulate_multiverse_with_shocks(
+def simulate_multiverse_auto(
     steps: int,
     timelines: list[TimelineSpec],
     shocks: list[ShockEvent] | None = None,
+    Deadline_Panic: bool = True,
+    Boredom_Side_Quest: bool = True,
+    t_exam: float = 10.0,
+    panic_window: float = 4.0,
+    panic_mastery_floor: float = 0.45,
+    boredom_threshold: float = 0.94,
     base_amount: float = 20.0,
     complexity: float = 1.5,
     n_harmonics: int = 3,
     coupling_J: np.ndarray | None = None,
-) -> dict[str, np.ndarray | list[str] | list[list[str]]]:
+) -> dict[str, np.ndarray | list[str]]:
     M, D, alpha = estimate_domain_bounds(base_amount, complexity, n_harmonics)
     B = len(timelines)
 
@@ -51,10 +46,13 @@ def simulate_multiverse_with_shocks(
         shock_map.setdefault(sh.step, []).append(sh)
 
     current_names = [tl.name for tl in timelines]
-    regime_history = [list(current_names)]
+    event_log: list[str] = []
+
+    fired_panic = np.zeros(B, dtype=bool)
+    fired_boredom = np.zeros(B, dtype=bool)
 
     for s in range(steps):
-        # 0. Apply scheduled shocks / regime switches at the start of step s
+        # 0A. Optional manual shocks
         if s in shock_map:
             for sh in shock_map[s]:
                 b = sh.branch
@@ -63,12 +61,53 @@ def simulate_multiverse_with_shocks(
                 n[s, b] = np.clip(n[s, b] + sh.dn, 0.0, 1.0)
                 if sh.new_regime is not None:
                     nr = sh.new_regime
-                    tau[b] = nr.tau
-                    sigma[b] = nr.sigma
-                    lam[b] = nr.lam
-                    k[b] = nr.k
-                    p_tilde[b] = nr.p_tilde
+                    tau[b], sigma[b], lam[b], k[b], p_tilde[b] = (
+                        nr.tau, nr.sigma, nr.lam, nr.k, nr.p_tilde
+                    )
                     current_names[b] = f"{nr.name} [{sh.label}]"
+                event_log.append(
+                    f"Step {s:02d} | Branch {b} ({timelines[b].name}): Manual [{sh.label}]"
+                )
+
+        # 0B. Endogenous state-triggered shocks
+        for b in range(B):
+            local_m = u[s, b] / xi[s, b]
+
+            if (
+                Boredom_Side_Quest
+                and not fired_boredom[b]
+                and local_m >= boredom_threshold
+                and xi[s, b] < 0.90
+            ):
+                fired_boredom[b] = True
+                xi[s, b] = np.clip(xi[s, b] + 0.18, alpha, 1.0)
+                lam[b] = max(lam[b], 0.11)
+                k[b] *= 1.35
+                p_tilde[b] *= 1.35
+                current_names[b] += " -> [Boredom_Side_Quest]"
+                event_log.append(
+                    f"Step {s:02d} (t={t[s, b]:.1f}) | Branch {b} ({timelines[b].name}): "
+                    f"Boredom_Side_Quest (u/xi={local_m:.2f} >= {boredom_threshold})"
+                )
+
+            time_left = t_exam - t[s, b]
+            if (
+                Deadline_Panic
+                and not fired_panic[b]
+                and 0.0 < time_left <= panic_window
+                and u[s, b] < panic_mastery_floor
+            ):
+                fired_panic[b] = True
+                v[s, b] = np.clip(v[s, b] + 0.16, 0.0, 1.0)
+                xi[s, b] = np.clip(xi[s, b] - 0.20, alpha, 1.0)
+                lam[b] = -0.06
+                tau[b] = max(tau[b], 0.75)
+                sigma[b] *= 0.25
+                current_names[b] += " -> [Deadline_Panic]"
+                event_log.append(
+                    f"Step {s:02d} (t={t[s, b]:.1f}) | Branch {b} ({timelines[b].name}): "
+                    f"Deadline_Panic (t_left={time_left:.1f}, u={u[s, b]:.2f})"
+                )
 
         # 1. Ingestion with per-timeline ignition check (v >= alpha)
         active = v[s] >= alpha
@@ -99,11 +138,10 @@ def simulate_multiverse_with_shocks(
         xi[s + 1] = xi_next
         v[s + 1] = v_next
         n[s + 1] = n_next
-        regime_history.append(list(current_names))
 
     return {
         "names": current_names,
-        "regime_history": regime_history,
+        "event_log": event_log,
         "bounds": np.array([M, D, alpha]),
         "t": t,
         "u": u,

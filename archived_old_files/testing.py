@@ -1,12 +1,12 @@
 import numpy as np
-from information_volume_computing import compute_info_volume
-from information_volume_computing import estimate_domain_bounds
-from non_normalized_learning_solver import simulate_non_normalized
-from normalized_learning_solver import simulate_normalized
-from automated_multiverse_solver import simulate_multiverse_auto
-from information_volume_computing import compute_info_volume
-from timeline_solver import TimelineSpec
-from shock_event_handler import ShockEvent
+from archived_old_files.information_volume_computing import compute_info_volume
+from archived_old_files.information_volume_computing import estimate_domain_bounds
+from archived_old_files.non_normalized_learning_solver import simulate_non_normalized
+from archived_old_files.normalized_learning_solver import simulate_normalized
+from archived_old_files.automated_multiverse_solver import simulate_multiverse_auto
+from archived_old_files.information_volume_computing import compute_info_volume
+from archived_old_files.timeline_solver import TimelineSpec
+from archived_old_files.shock_event_handler import ShockEvent
 
 M, D, alpha = estimate_domain_bounds(base_amount=20.0, complexity=1.5, n_harmonics=3)
 I0 = compute_info_volume(base_amount=20.0, complexity=1.5, phi=np.pi / 4, n_harmonics=3)

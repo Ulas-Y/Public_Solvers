@@ -1,5 +1,5 @@
 import numpy as np
-from multiverse_4D_Wenergy import DomainSpec, simulate_multiverse_4d_energy , plot_energy_burnout_diagnostics , TimelineSpec, build_graph_laplacian , estimate_domain_bounds, compute_info_volume
+from archived_old_files.multiverse_4D_Wenergy import DomainSpec, simulate_multiverse_4d_energy , plot_energy_burnout_diagnostics , TimelineSpec, build_graph_laplacian , estimate_domain_bounds, compute_info_volume
 
 laplacian = build_graph_laplacian(np.array([[0, 0.04, 0.02], [0.04, 0, 0.05], [0.02, 0.05, 0]]))  # Test the function
 

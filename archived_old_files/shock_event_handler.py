@@ -1,29 +1,29 @@
 from dataclasses import dataclass
 import numpy as np
-from information_volume_computing import compute_info_volume
-from information_volume_computing import estimate_domain_bounds
+from archived_old_files.information_volume_computing import compute_info_volume
+from archived_old_files.information_volume_computing import estimate_domain_bounds
+from archived_old_files.timeline_solver import TimelineSpec
 
 @dataclass
-class TimelineSpec:
-    name: str
-    tau: float       # Proper time dilation per step
-    phi0: float      # Initial Fourier synthesis phase
-    v0: float        # Initial normalized bandwidth
-    n0: float        # Initial absorption efficiency
-    sigma: float     # Forgetting rate
-    lam: float       # Scope creep rate
-    k: float         # Efficiency meta-learning rate
-    p_tilde: float   # Bandwidth meta-learning rate
+class ShockEvent:
+    step: int
+    branch: int                              # Timeline index to perturb
+    new_regime: TimelineSpec | None = None   # Optional parameter swap
+    dv: float = 0.0                          # Instantaneous bandwidth kick
+    dxi: float = 0.0                         # Instantaneous scope shift (<0 = axiom clamp)
+    dn: float = 0.0                          # Instantaneous efficiency boost
+    label: str = "Shock"
 
 
-def simulate_multiverse(
+def simulate_multiverse_with_shocks(
     steps: int,
     timelines: list[TimelineSpec],
+    shocks: list[ShockEvent] | None = None,
     base_amount: float = 20.0,
     complexity: float = 1.5,
     n_harmonics: int = 3,
     coupling_J: np.ndarray | None = None,
-) -> dict[str, np.ndarray | list[str]]:
+) -> dict[str, np.ndarray | list[str] | list[list[str]]]:
     M, D, alpha = estimate_domain_bounds(base_amount, complexity, n_harmonics)
     B = len(timelines)
 
@@ -46,7 +46,30 @@ def simulate_multiverse(
     v[0] = np.array([tl.v0 for tl in timelines], dtype=float)
     n[0] = np.array([tl.n0 for tl in timelines], dtype=float)
 
+    shock_map: dict[int, list[ShockEvent]] = {}
+    for sh in (shocks or []):
+        shock_map.setdefault(sh.step, []).append(sh)
+
+    current_names = [tl.name for tl in timelines]
+    regime_history = [list(current_names)]
+
     for s in range(steps):
+        # 0. Apply scheduled shocks / regime switches at the start of step s
+        if s in shock_map:
+            for sh in shock_map[s]:
+                b = sh.branch
+                v[s, b] = np.clip(v[s, b] + sh.dv, 0.0, 1.0)
+                xi[s, b] = np.clip(xi[s, b] + sh.dxi, alpha, 1.0)
+                n[s, b] = np.clip(n[s, b] + sh.dn, 0.0, 1.0)
+                if sh.new_regime is not None:
+                    nr = sh.new_regime
+                    tau[b] = nr.tau
+                    sigma[b] = nr.sigma
+                    lam[b] = nr.lam
+                    k[b] = nr.k
+                    p_tilde[b] = nr.p_tilde
+                    current_names[b] = f"{nr.name} [{sh.label}]"
+
         # 1. Ingestion with per-timeline ignition check (v >= alpha)
         active = v[s] >= alpha
         u_gain = np.where(
@@ -55,7 +78,7 @@ def simulate_multiverse(
             0.0,
         )
 
-        # 2. Retention + optional spatial-time Laplacian coupling across timelines
+        # 2. Retention + optional spatial-time Laplacian coupling
         u_tilde = (u[s] + u_gain) * np.exp(-sigma * tau)
         if coupling_J is not None:
             diff_matrix = u_tilde[None, :] - u_tilde[:, None]
@@ -66,7 +89,7 @@ def simulate_multiverse(
 
         local_mastery = u_next / xi[s]
 
-        # 3. Vectorized meta-learning & clamped scope creep
+        # 3. Meta-learning & clamped scope creep
         n_next = np.minimum(1.0, n[s] * np.exp(k * local_mastery * tau))
         v_next = np.minimum(1.0, v[s] * np.exp(p_tilde * local_mastery * tau))
         xi_next = np.clip(xi[s] * np.exp(lam * tau), alpha, 1.0)
@@ -76,9 +99,11 @@ def simulate_multiverse(
         xi[s + 1] = xi_next
         v[s + 1] = v_next
         n[s + 1] = n_next
+        regime_history.append(list(current_names))
 
     return {
-        "names": [tl.name for tl in timelines],
+        "names": current_names,
+        "regime_history": regime_history,
         "bounds": np.array([M, D, alpha]),
         "t": t,
         "u": u,

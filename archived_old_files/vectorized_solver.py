@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 import numpy as np
 import matplotlib.pyplot as plt
-from timeline_solver import TimelineSpec
-from timeline_solver import estimate_domain_bounds, compute_info_volume
+from archived_old_files.timeline_solver import TimelineSpec
+from archived_old_files.timeline_solver import estimate_domain_bounds, compute_info_volume
 
 def build_graph_laplacian(coupling_J: np.ndarray) -> np.ndarray:
     """

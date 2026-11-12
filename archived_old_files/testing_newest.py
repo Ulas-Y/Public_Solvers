@@ -1,4 +1,4 @@
-from complete_solver_wPlots import simulate_multiverse_auto, TimelineSpec, ShockEvent, estimate_domain_bounds, compute_info_volume, plot_multiverse_diagnostics
+from archived_old_files.complete_solver_wPlots import simulate_multiverse_auto, TimelineSpec, ShockEvent, estimate_domain_bounds, compute_info_volume, plot_multiverse_diagnostics
 
 simulation_results = simulate_multiverse_auto(
     steps=50,
