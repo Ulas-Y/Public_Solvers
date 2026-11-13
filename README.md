@@ -241,3 +241,8 @@ $$
 $$
 
 Blind copy-paste workflows collapse to $x^{\mathrm{Human}} \le 0.08$ in the coding phase because the user neither writes test harnesses nor verifies tensor shapes. Retaining **30% human ownership** in implementation and **65–85%** in upstream formulation preserves architectural agency while offloading boilerplate vectorization ($3.33\times$) to the LLM.
+
+### The word that started it all:
+
+“Nothing or Carnage”
+Also thx to all my AI assistants (mostly Gemini) and me for this project too :D
