@@ -216,3 +216,28 @@ plot_multiverse_4d(res, save_path="./Figures/Multiverse_4D.png")
 plot_energy_burnout(res, domain_idx=0, save_path="./Figures/Energy_Burnout.png")
 plot_interactive_run(res, run_idx=0, domain_idx=0, interactive=True)
 ```
+
+---
+
+## ⚗️ Human–AI Stoichiometry (Provenance Audit)
+
+Because every non-trivial repository with clean plots immediately gets accused of being 100% LLM "vibe-coded," this project tracks its own **phase-by-phase composition** as a two-component mixture ($x^{\mathrm{Human}} + x^{\mathrm{AI}} = 1.0$):
+
+| Project Phase | $x^{\mathrm{Human}}$ | $x^{\mathrm{AI}}$ | Human Control (`U`) | LLM Acceleration |
+| :--- | :---: | :---: | :--- | :--- |
+| **1. Ideation** *(Ontology, goals, limits)* | **0.85** | **0.15** | Originated spite-fuel mechanics, $\sin^2/\cos^2$ chronotypes, axiomatic compression ($M/D$), subjective clocks, burnout lockouts, and the blind-LLM prior benchmark. | Suggested rank-4 tensor batching `(S+1, R, B, G)` and modularizing the burnout throttle $E(t)$. |
+| **2. Definitions** *(Equations, transforms)* | **0.65** | **0.35** | Derived dimensionless scaling ($u, v, \xi, \alpha, \tilde{p}$), Fourier harmonic volume, $1/i$-damped spike decay, and circadian fatigue buildup rules. | Formalized Graph Laplacian diffusion ($\mathcal{L} = D^{\mathrm{deg}} - J$), prerequisite contractions ($\mathbf{U}(s)W^\top$), `max(0, E - F)` clamps, and sleep recovery. |
+| **3. Coding** *(Engine, backends, UI)* | **0.30** | **0.70** | Authored initial prototypes, wrote custom test drivers, caught tensor/spec input mismatches, ran sweeps, and extended parameters live. | Generated the vectorized 4D solver (`engine.py`), PyTorch/NumPy auto-dispatch (`backend.py`), interactive Matplotlib scrubbers (`plotting.py`), and module split. |
+| **4. Publishing & Polish** *(Repo, docs, QA)* | **0.55** | **0.45** | Structured repository files (`CONTRIBUTING.md`, `Issues.md`, `LICENSE.md`, `To-Do.md`), set README tone, rendered figures, and verified GitHub MathJax output. | Proposed the 6-file package layout, drafted documentation templates, and flagged GFM underscore/MathJax parsing conflicts. |
+
+### Effective Throughput Multipliers
+
+* **Unweighted Phase Mean:** $\bar{x}^{\mathrm{Human}} = 0.59$, $\bar{x}^{\mathrm{AI}} = 0.41$
+* **Effort-Weighted Total** ($\mathbf{w} = [0.15, 0.25, 0.40, 0.20]$): $x^{\mathrm{Human}} = 0.52$, $x^{\mathrm{AI}} = 0.48$
+* **Phase Speedup Vector** ($M^{\mathrm{AI}} = 1 / x^{\mathrm{Human}}$):
+
+$$
+\mathbf{M}^{\mathrm{AI}} = \big[1.18,\; 1.54,\; 3.33,\; 1.82\big]
+$$
+
+Blind copy-paste workflows collapse to $x^{\mathrm{Human}} \le 0.08$ in the coding phase because the user neither writes test harnesses nor verifies tensor shapes. Retaining **30% human ownership** in implementation and **65–85%** in upstream formulation preserves architectural agency while offloading boilerplate vectorization ($3.33\times$) to the LLM.
